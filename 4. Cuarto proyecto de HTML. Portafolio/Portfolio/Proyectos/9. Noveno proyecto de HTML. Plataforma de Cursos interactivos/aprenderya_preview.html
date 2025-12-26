@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AprenderYa - Plataforma de Cursos Virtuales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            min-height: 100vh;
+            color: #333;
+            padding-top: 40px;
+        }
+
+        header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 40px;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #000;
+        }
+
+        .add-course-btn {
+            padding: 0.6rem 1.5rem;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-course-btn:hover {
+            background: #000;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #d0d0d0;
+        }
+
+        .search-filter-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 3rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #1a1a1a;
+        }
+
+        .filter-section h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid #1a1a1a;
+            background: white;
+            color: #1a1a1a;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+            font-weight: bold;
+        }
+
+        .delete-btn:hover {
+            background: #1a1a1a;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            background: #2a2a2a;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: #f0f0f0;
+            color: #1a1a1a;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            color: #1a1a1a;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .course-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .course-btn:hover {
+            background: #000;
+        }
+
+        footer {
+            background: #ffffff;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { 
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .preview-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .modal-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .modal-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .preview-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 0.8rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10001;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-banner">
+        🔍 MODO VISTA PREVIA - Funcionalidad limitada para demostración
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-icon">🔒</div>
+            <div class="preview-badge">ACCESO LIMITADO</div>
+            <h3>Funcionalidad Restringida</h3>
+            <p>Esta es una versión de demostración para portfolio.</p>
+            <p>Las interacciones están deshabilitadas en esta vista previa.</p>
+            <p style="font-size: 0.9rem; color: #999; margin-top: 1rem;">
+                Para ver el proyecto completo y funcional, visita el repositorio en GitHub
+            </p>
+            <button class="modal-button" onclick="closeModal()">Entendido</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">🎓 AprenderYa</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#cursos">Cursos</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li><button class="add-course-btn" onclick="showModal(event)">+ Agregar Curso</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Aprende Cualquier Cosa, En Cualquier Momento</h1>
+            <p>Miles de cursos de calidad en tecnología, arte, mecánica, diseño y mucho más</p>
+        </section>
+
+        <div class="search-filter-container">
+            <input type="text" class="search-box" placeholder="🔍 Buscar cursos por nombre o descripción..." onclick="showModal(event)">
+            
+            <div class="filter-section">
+                <h3>Categorías</h3>
+                <div class="filter-buttons">
+                    <button class="filter-btn active">Todas</button>
+                    <button class="filter-btn" onclick="showModal(event)">Tecnología</button>
+                    <button class="filter-btn" onclick="showModal(event)">Diseño</button>
+                    <button class="filter-btn" onclick="showModal(event)">Arte</button>
+                    <button class="filter-btn" onclick="showModal(event)">Mecánica</button>
+                    <button class="filter-btn" onclick="showModal(event)">Electrónica</button>
+                    <button class="filter-btn" onclick="showModal(event)">Música</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="courses-grid">
+            <div class="course-card" onclick="showModal(event)">
+                <button class="delete-btn" onclick="showModal(event)">✕</button>
+                <div class="course-image"></div>
+                <div class="course-content">
+                    <span class="course-category">TECNOLOGÍA</span>
+                    <h3 class="course-title">Desarrollo Web Completo</h3>
+                    <p class="course-description">Aprende HTML, CSS, JavaScript y frameworks modernos desde cero hasta nivel avanzado.</p>
+                    <div class="course-meta">
+                        <span>⏱️ 40 horas</span>
+                        <span>📊 Principiante</span>
+                    </div>
+                    <div class="course-meta">
+                        <span>👥 15,420 estudiantes</span>
+                    </div>
+                    <button class="course-btn">Ver Curso →</button>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="showModal(event)">
+                <button class="delete-btn" onclick="showModal(event)">✕</button>
+                <div class="course-image"></div>
+                <div class="course-content">
+                    <span class="course-category">DISEÑO</span>
+                    <h3 class="course-title">Diseño Gráfico Profesional</h3>
+                    <p class="course-description">Domina Adobe Photoshop, Illustrator y herramientas de diseño para crear proyectos impactantes.</p>
+                    <div class="course-meta">
+                        <span>⏱️ 30 horas</span>
+                        <span>📊 Intermedio</span>
+                    </div>
+                    <div class="course-meta">
+                        <span>👥 8,920 estudiantes</span>
+                    </div>
+                    <button class="course-btn">Ver Curso →</button>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="showModal(event)">
+                <button class="delete-btn" onclick="showModal(event)">✕</button>
+                <div class="course-image"></div>
+                <div class="course-content">
+                    <span class="course-category">ARTE</span>
+                    <h3 class="course-title">Pintura Digital y Arte Conceptual</h3>
+                    <p class="course-description">Técnicas profesionales de pintura digital, ilustración y desarrollo de concept art.</p>
+                    <div class="course-meta">
+                        <span>⏱️ 25 horas</span>
+                        <span>📊 Intermedio</span>
+                    </div>
+                    <div class="course-meta">
+                        <span>👥 6,730 estudiantes</span>
+                    </div>
+                    <button class="course-btn">Ver Curso →</button>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="showModal(event)">
+                <button class="delete-btn" onclick="showModal(event)">✕</button>
+                <div class="course-image"></div>
+                <div class="course-content">
+                    <span class="course-category">MECÁNICA</span>
+                    <h3 class="course-title">Mecánica Automotriz Básica</h3>
+                    <p class="course-description">Fundamentos de mecánica de automóviles, mantenimiento y diagnóstico de fallas comunes.</p>
+                    <div class="course-meta">
+                        <span>⏱️ 35 horas</span>
+                        <span>📊 Principiante</span>
+                    </div>
+                    <div class="course-meta">
+                        <span>👥 5,240 estudiantes</span>
+                    </div>
+                    <button class="course-btn">Ver Curso →</button>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="showModal(event)">
+                <button class="delete-btn" onclick="showModal(event)">✕</button>
+                <div class="course-image"></div>
+                <div class="course-content">
+                    <span class="course-category">ELECTRÓNICA</span>
+                    <h3 class="course-title">Electrónica y Arduino</h3>
+                    <p class="course-description">Aprende circuitos electrónicos, programación de Arduino y creación de proyectos IoT.</p>
+                    <div class="course-meta">
+                        <span>⏱️ 28 horas</span>
+                        <span>📊 Intermedio</span>
+                    </div>
+                    <div class="course-meta">
+                        <span>👥 9,850 estudiantes</span>
+                    </div>
+                    <button class="course-btn">Ver Curso →</button>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="showModal(event)">
+                <button class="delete-btn" onclick="showModal(event)">✕</button>
+                <div class="course-image"></div>
+                <div class="course-content">
+                    <span class="course-category">MÚSICA</span>
+                    <h3 class="course-title">Producción Musical Digital</h3>
+                    <p class="course-description">Crea música profesional con software DAW, mezcla, masterización y producción musical.</p>
+                    <div class="course-meta">
+                        <span>⏱️ 32 horas</span>
+                        <span>📊 Principiante</span>
+                    </div>
+                    <div class="course-meta">
+                        <span>👥 7,560 estudiantes</span>
+                    </div>
+                    <button class="course-btn">Ver Curso →</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Sobre AprenderYa</h3>
+                <p>Somos una plataforma dedicada a democratizar la educación, ofreciendo cursos de calidad en múltiples disciplinas para que todos puedan aprender y crecer profesionalmente.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 info@aprenderya.com</p>
+                <p>📱 +1 (555) 123-4567</p>
+                <p>📍 Ciudad, País</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AprenderYa. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showModal(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        // Interceptar selección de texto
+        document.addEventListener('selectstart', function(e) {
+            if (!e.target.closest('.modal-content')) {
+                e.preventDefault();
+                showModal();
+            }
+        });
+
+        // Interceptar clic derecho
+        document.addEventListener('contextmenu', function(e) {
+            if (!e.target.closest('.modal-content')) {
+                e.preventDefault();
+                showModal();
+            }
+        });
+
+        // Interceptar copiar
+        document.addEventListener('copy', function(e) {
+            if (!e.target.closest('.modal-content')) {
+                e.preventDefault();
+                showModal();
+            }
+        });
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

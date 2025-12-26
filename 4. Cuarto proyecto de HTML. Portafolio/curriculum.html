@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Currículums - Jefferson Rosales</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Righteous&family=Work+Sans:wght@100;300;400;600;800&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e2326 0%, #252A2E 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-family: 'Righteous', cursive;
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #1e4de6;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #ccc;
+        }
+
+        .curriculum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .curriculum-card {
+            background-color: #252A2E;
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .curriculum-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(30, 77, 230, 0.3);
+            border-color: #1e4de6;
+        }
+
+        .curriculum-card .icon {
+            font-size: 60px;
+            color: #1e4de6;
+            margin-bottom: 20px;
+        }
+
+        .curriculum-card h2 {
+            font-family: 'Righteous', cursive;
+            font-size: 32px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .curriculum-card p {
+            color: #ccc;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: #1e4de6;
+            z-index: -1;
+            transition: width 0.5s ease;
+        }
+
+        .btn:hover::before {
+            width: 100%;
+        }
+
+        .btn:hover {
+            color: #fff;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-link a {
+            color: #1e4de6;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #0834c5;
+        }
+
+        .back-link a i {
+            margin-right: 8px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .curriculum-card h2 {
+                font-size: 28px;
+            }
+
+            .curriculum-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .language-badge {
+            display: inline-block;
+            background-color: #1e4de6;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mis Currículums</h1>
+            <p>Selecciona el idioma de tu preferencia</p>
+        </div>
+
+        <div class="curriculum-grid">
+            <!-- Curriculum en Español -->
+            <div class="curriculum-card">
+                <div class="icon">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <span class="language-badge">ESPAÑOL</span>
+                <h2>Español</h2>
+                <p>Curriculum Vitae completo en español con toda mi experiencia profesional y habilidades técnicas.</p>
+                <div class="btn-group">
+                    <a href="Informe Curricular Jefferson Rosales.pdf" target="_blank" class="btn">
+                        <i class="fa-solid fa-eye"></i> Visualizar
+                    </a>
+                    <a href="Informe Curricular Jefferson Rosales.pdf" download class="btn">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </div>
+
+            <!-- Curriculum en Inglés -->
+            <div class="curriculum-card">
+                <div class="icon">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <span class="language-badge">ENGLISH</span>
+                <h2>English</h2>
+                <p>Complete Curriculum Vitae in English with all my professional experience and technical skills.</p>
+                <div class="btn-group">
+                    <a href="Curriculum Vitae Jefferson Rosales.pdf" target="_blank" class="btn">
+                        <i class="fa-solid fa-eye"></i> View
+                    </a>
+                    <a href="Curriculum Vitae Jefferson Rosales.pdf" download class="btn">
+                        <i class="fa-solid fa-download"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">
+                <i class="fa-solid fa-arrow-left"></i> Volver al Portfolio
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,255 @@
+        @import url('https://fonts.googleapis.com/css2?family=Righteous&family=Work+Sans:wght@100;300;400;600;800&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Work Sans';
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: #1e2326;
+            color: #fff;
+        }
+        
+        /* HEADER */
+        .contenedor-header {
+            background: #1e2326;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .contenedor-header header {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        
+        .contenedor-header header .logo a {
+            font-family: 'Righteous';
+            font-size: 36px;
+            color: #1e4de6;
+            text-decoration: none;
+        }
+        
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .language-selector button {
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+        
+        .language-selector button:hover,
+        .language-selector button.active {
+            background-color: #1e4de6;
+            border-color: #1e4de6;
+        }
+        
+        .back-link {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 15px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            transition: 0.3s;
+            margin-right: 15px;
+        }
+        
+        .back-link:hover {
+            background-color: #1e4de6;
+            border-color: #1e4de6;
+        }
+        
+        /* MAIN CONTENT */
+        main {
+            max-width: 1100px;
+            margin: 100px auto 50px;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-family: 'Righteous';
+            text-align: center;
+            padding: 20px 0 40px;
+            color: #1e4de6;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .project-card {
+            background-color: #252A2E;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(30, 77, 230, 0.3);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background-color: #1e2326;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid #1e4de6;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .project-image .placeholder {
+            font-size: 48px;
+            color: #1e4de6;
+        }
+        
+        .project-content {
+            padding: 25px;
+        }
+        
+        .project-number {
+            color: #1e4de6;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .project-title {
+            font-size: 24px;
+            font-family: 'Righteous';
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .project-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tech-tag {
+            background-color: #1e4de6;
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .project-link {
+            display: inline-block;
+            color: #1e4de6;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        .project-link:hover {
+            color: #0834c5;;
+        }
+        
+        .project-link i {
+            margin-left: 5px;
+            text-decoration: none;
+        }
+
+        /* Ensure visited links keep same color and no underline */
+        .project-link,
+        .project-link:visited,
+        .project-link:focus,
+        .project-link:active {
+            text-decoration: none;
+            outline: none;
+            color: #1e4de6;
+        }
+        /* FOOTER */
+        footer {
+            background-color: #252A2E;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        footer .redes {
+            margin-bottom: 15px;
+        }
+        
+        footer .redes a {
+            color: #fff;
+            display: inline-block;
+            text-decoration: none;
+            border: 1px solid #fff;
+            border-radius: 100%;
+            width: 42px;
+            height: 42px;
+            line-height: 42px;
+            margin: 0 5px;
+            font-size: 20px;
+            transition: .3s;
+        }
+        
+        footer .redes a:hover {
+            background-color: #1e4de6;
+        }
+        
+        /* RESPONSIVE */
+        @media screen and (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 36px;
+            }
+            
+            .contenedor-header header {
+                flex-wrap: wrap;
+            }
+            
+            .language-selector {
+                margin-top: 10px;
+            }
+        }

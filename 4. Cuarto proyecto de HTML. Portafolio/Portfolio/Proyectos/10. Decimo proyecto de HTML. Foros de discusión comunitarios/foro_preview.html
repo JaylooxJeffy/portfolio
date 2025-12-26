@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foro Comunitario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 40px;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .header-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: opacity 0.3s;
+        }
+
+        .header-nav a:hover {
+            opacity: 0.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            flex: 1;
+        }
+
+        nav {
+            background: white;
+            padding: 15px 0;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        nav button {
+            background: transparent;
+            border: none;
+            color: #555;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
+
+        nav button:hover {
+            background: #f8f9fa;
+            color: #2c3e50;
+        }
+
+        nav button.active {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .content {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            min-height: 500px;
+        }
+
+        .highlight-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #2c3e50;
+        }
+
+        .highlight-box h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .featured-comment {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .featured-comment .author {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .featured-comment .comment-text {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .featured-comment .stats {
+            color: #777;
+            font-size: 0.85em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .stat-item strong {
+            color: #2c3e50;
+        }
+
+        .filter-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .filter-section label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-right: 15px;
+            font-size: 0.95em;
+        }
+
+        .filter-section select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.95em;
+            cursor: pointer;
+            background: white;
+        }
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .room-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .room-card:hover {
+            border-color: #2c3e50;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+        .room-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .room-card .category {
+            display: inline-block;
+            background: #e8e8e8;
+            color: #555;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .room-card p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .room-card .stats {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: #bbb;
+            line-height: 1.8;
+            font-size: 0.9em;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #3d5266;
+            padding-top: 20px;
+            text-align: center;
+            color: #bbb;
+            font-size: 0.85em;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { 
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .preview-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .modal-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .modal-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .preview-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 0.8rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10001;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header-nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-banner">
+        🔍 MODO VISTA PREVIA - Funcionalidad limitada para demostración
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-icon">🔒</div>
+            <div class="preview-badge">ACCESO LIMITADO</div>
+            <h3>Funcionalidad Restringida</h3>
+            <p>Esta es una versión de demostración para portfolio.</p>
+            <p>Las interacciones están deshabilitadas en esta vista previa.</p>
+            <p style="font-size: 0.9rem; color: #999; margin-top: 1rem;">
+                Para ver el proyecto completo y funcional, visita el repositorio en GitHub
+            </p>
+            <button class="modal-button" onclick="closeModal()">Entendido</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <h1>💬 Foro Comunitario</h1>
+            </div>
+            <nav class="header-nav">
+                <a href="#" onclick="showModal(event)">Inicio</a>
+                <a href="#" onclick="showModal(event)">Acerca de</a>
+                <a href="#" onclick="showModal(event)">Reglas</a>
+                <a href="#" onclick="showModal(event)">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <button class="nav-btn active">Lobby</button>
+            <button class="nav-btn" onclick="showModal(event)">Salas de Discusión</button>
+        </nav>
+
+        <div class="content">
+            <div class="section active">
+                <div class="highlight-box">
+                    <h2>💡 Comentario Más Ingenioso de la Semana</h2>
+                    <div class="featured-comment">
+                        <div class="author">@TechGuru2024</div>
+                        <div class="comment-text">
+                            "La inteligencia artificial no es que las máquinas piensen como humanos, 
+                            sino que los humanos finalmente admitan que no siempre piensan lógicamente"
+                        </div>
+                        <div class="stats">234 me gusta • 42 respuestas • Sala: Tecnología</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h2>🔥 Temas Más Activos Hoy</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <strong>1. </strong>¿Cuál es el mejor lenguaje de programación para 2025?<br>
+                            <small style="color: #999;">156 mensajes</small>
+                        </div>
+                        <div class="stat-item">
+                            <strong>2. </strong>Debate: ¿Son los videojuegos arte?<br>
+                            <small style="color: #999;">98 mensajes</small>
+                        </div>
+                        <div class="stat-item">
+                            <strong>3. </strong>Recetas rápidas para estudiantes<br>
+                            <small style="color: #999;">87 mensajes</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h2>📊 Estadísticas de la Comunidad</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <strong>Miembros Activos</strong><br>
+                            1,247 usuarios
+                        </div>
+                        <div class="stat-item">
+                            <strong>Mensajes Hoy</strong><br>
+                            3,891 publicaciones
+                        </div>
+                        <div class="stat-item">
+                            <strong>Sala Más Popular</strong><br>
+                            Tecnología
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="filter-section">
+                    <label>Filtrar por categoría:</label>
+                    <select onclick="showModal(event)">
+                        <option>Todas las categorías</option>
+                        <option>Tecnología</option>
+                        <option>Entretenimiento</option>
+                        <option>Ciencia</option>
+                    </select>
+                </div>
+
+                <div class="rooms-grid">
+                    <div class="room-card" onclick="showModal(event)">
+                        <span class="category">TECNOLOGÍA</span>
+                        <h3>Inteligencia Artificial y ML</h3>
+                        <p>Discute sobre avances en IA, machine learning y sus aplicaciones</p>
+                        <div class="stats">
+                            <span>234 participantes</span>
+                            <span>1567 mensajes</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card" onclick="showModal(event)">
+                        <span class="category">ENTRETENIMIENTO</span>
+                        <h3>Series y Películas 2025</h3>
+                        <p>Comparte recomendaciones y debate sobre lo último en streaming</p>
+                        <div class="stats">
+                            <span>189 participantes</span>
+                            <span>892 mensajes</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card" onclick="showModal(event)">
+                        <span class="category">CIENCIA</span>
+                        <h3>Física Cuántica para Todos</h3>
+                        <p>Conceptos complejos explicados de forma sencilla</p>
+                        <div class="stats">
+                            <span>145 participantes</span>
+                            <span>678 mensajes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Sobre Nosotros</h3>
+                    <p>Foro Comunitario es un espacio para compartir ideas, debatir temas de interés y conectar con personas de todo el mundo.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Soporte</h3>
+                    <p>Centro de Ayuda</p>
+                    <p>Contacto</p>
+                    <p>Política de Privacidad</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Foro Comunitario. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showModal(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        document.addEventListener('selectstart', function(e) {
+            if (!e.target.closest('.modal-content')) {
+                e.preventDefault();
+                showModal();
+            }
+        });
+
+        document.addEventListener('contextmenu', function(e) {
+            if (!e.target.closest('.modal-content')) {
+                e.preventDefault();
+                showModal();
+            }
+        });
+
+        document.addEventListener('copy', function(e) {
+            if (!e.target.closest('.modal-content')) {
+                e.preventDefault();
+                showModal();
+            }
+        });
+
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
